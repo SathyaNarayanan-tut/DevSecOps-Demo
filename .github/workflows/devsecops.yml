@@ -1,5 +1,12 @@
 name: DevSecOps Pipeline
 
+permissions:
+  contents: read       # allows checkout to read repo content
+  id-token: write      # if you use OIDC (optional, remove if not used)
+  checks: write        # to create status checks
+  actions: read        # read-only for GitHub actions metadata
+  # Add more permissions only if needed, avoid broad write-all
+
 on:
   push:
     branches: [ main ]
