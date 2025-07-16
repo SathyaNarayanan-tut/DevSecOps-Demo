@@ -1,0 +1,43 @@
+name: DevSecOps Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  devsecops:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: TruffleHog Secret Scan
+      run: |
+        pip install trufflehog
+        trufflehog filesystem . || true
+
+    - name: Bandit Security Scan
+      run: |
+        pip install bandit
+        bandit -r . -ll
+
+    - name: Docker Image Scan with Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'python:3.10-slim'
+
+    - name: Terraform Security Scan with Checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: .
