@@ -45,4 +45,10 @@ resource "aws_instance" "demo" {
   }
 
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
+
+  root_block_device {
+    encrypted   = true
+    volume_size = 8       # adjust size if needed
+    volume_type = "gp3"   # recommended volume type
+  }
 }
