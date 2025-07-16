@@ -11,4 +11,4 @@ To test:
 2. Push to \`main\` branch.
 3. View GitHub Actions > \`DevSecOps Pipeline\`.
 
-Built for portfolio and demo purposes.
+Built for demo purposes.
